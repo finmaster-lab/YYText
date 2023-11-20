@@ -137,6 +137,11 @@ static dispatch_queue_t YYTextAsyncLayerGetReleaseQueue() {
         BOOL opaque = self.opaque;
         CGFloat scale = self.contentsScale;
         CGColorRef backgroundColor = (opaque && self.backgroundColor) ? CGColorRetain(self.backgroundColor) : NULL;
+        if (self.bounds.size.width<=0 || self.bounds.size.height<=0) {
+           self.contents = nil;
+           return;
+        }
+        
         if (size.width < 1 || size.height < 1) {
             CGImageRef image = (__bridge_retained CGImageRef)(self.contents);
             self.contents = nil;
